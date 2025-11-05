@@ -18,7 +18,7 @@ app.use("/images", express.static(path.join(process.cwd(), "images")));
 
 // ✅ Enable CORS FIRST — before routes
 const corsOptions = {
-  origin: ["http://localhost:3001", "https://blog-website-kbge.vercel.app"],
+  origin: ["http://localhost:3001", "https://blog-website-zclq.vercel.app"],
   
   credentials: true,
 };
