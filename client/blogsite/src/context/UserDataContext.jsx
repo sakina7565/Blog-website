@@ -16,7 +16,7 @@ export const UserDataProvider = ({ children }) => {
 
   const getBaseURL = () => {
     const role = localStorage.getItem("role")?.toLowerCase() || "admin";
-    return `http://localhost:7000/${role}/user`;
+    return `https://blog-backend.onrender.com/${role}/user`;
   };
 
   const fetchAllUser = async () => {

@@ -6,15 +6,17 @@ export const CategoryDataContext = createContext();
 export const CategoryDataProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
 
+  const getBaseURL = () => {
+    const role = localStorage.getItem("role")?.toLowerCase() || "admin";
+    return `https://blog-backend.onrender.com/${role}/categories`;
+  };
+
   //   Insert category from API
   const insertCategory = async (category) => {
     try {
-      const res = await axios.post(
-        "http://localhost:7000/admin/categories/insertcategory",
-        category
-      );
+      const res = await axios.post(`${getBaseURL()}/insertcategory`, category);
       fetchAllCategories();
-     // console.log(res.data.message);
+      // console.log(res.data.message);
     } catch (error) {
       console.log(error);
     }
@@ -23,16 +25,14 @@ export const CategoryDataProvider = ({ children }) => {
   //   Insert blogs from API
   const fetchAllCategories = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:7000/admin/categories/getAllCategories"
-      );
+      const res = await axios.get(`${getBaseURL()}/getAllCategories`);
       setCategories(res.data.Categories || []);
     } catch (error) {
       console.log(error);
     }
   };
 
- // categories.forEach(c => console.log(c));
+  // categories.forEach(c => console.log(c));
 
   useEffect(() => {
     fetchAllCategories();
@@ -40,9 +40,7 @@ export const CategoryDataProvider = ({ children }) => {
 
   const fetchAllCategoriesById = async (id) => {
     try {
-      const res = await axios.get(
-        `http://localhost:7000/admin/categories/getAllCategoryById/${id}`
-      );
+      const res = await axios.get(`${getBaseURL()}/getAllCategoryById/${id}`);
       //console.log(res.data);
       return res.data.Categories || null;
     } catch (error) {
@@ -53,10 +51,10 @@ export const CategoryDataProvider = ({ children }) => {
   const updateCategories = async (id, updateCategory) => {
     try {
       const res = await axios.put(
-        `http://localhost:7000/admin/categories/updateCategories/${id}`,
+        `${getBaseURL()}/updateCategories/${id}`,
         updateCategory
       );
-     // console.log(res.data);
+      // console.log(res.data);
       fetchAllCategories();
       return res.data.Categories || null;
     } catch (error) {
@@ -66,9 +64,7 @@ export const CategoryDataProvider = ({ children }) => {
 
   const deleteCategories = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:7000/admin/categories/deleteCategories/${id}`
-      );
+      const res = await axios.delete(`${getBaseURL()}/deleteCategories/${id}`);
       fetchAllCategories();
       return res.data.success || null;
     } catch (error) {
@@ -95,8 +91,6 @@ export const CategoryDataProvider = ({ children }) => {
 
 export const useCategory = () => useContext(CategoryDataContext);
 
-
-
 // SubCategory  context
 export const SubCategoryContext = createContext();
 
@@ -105,10 +99,7 @@ export const SubCategoriesDataProvider = ({ children }) => {
 
   const insertSubCategory = async (subcategory) => {
     try {
-      await axios.post(
-        "http://localhost:7000/admin/categories/insertSubCategory",
-        subcategory
-      );
+      await axios.post(`${getBaseURL()}/insertSubCategory`, subcategory);
       getAllSubcategoryData(subcategory.category);
     } catch (error) {
       console.log(error);
@@ -118,7 +109,7 @@ export const SubCategoriesDataProvider = ({ children }) => {
   const getAllSubcategoryData = async (categoryId) => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/admin/categories/getAllSubCategories/${categoryId}`
+        `${getBaseURL()}/getAllSubCategories/${categoryId}`
       );
       // console.log(res.data)
       setSubCategories(res.data.Categories || []);
@@ -129,9 +120,7 @@ export const SubCategoriesDataProvider = ({ children }) => {
 
   const getAllSubCategoryById = async (id) => {
     try {
-      const res = await axios.get(
-        `http://localhost:7000/admin/categories/getAllSubCategories/${id}`
-      );
+      const res = await axios.get(`${getBaseURL()}/getAllSubCategories/${id}`);
       return res.data.Categories || null;
     } catch (error) {
       console.log(error);
@@ -141,7 +130,7 @@ export const SubCategoriesDataProvider = ({ children }) => {
   const updateSubCategory = async (data, id) => {
     try {
       const res = await axios.put(
-        `http://localhost:7000/admin/categories/updateSubCategory/${id}`,
+        `${getBaseURL()}/updateSubCategory/${id}`,
         data
       );
       getAllSubcategoryData(res.data.Category.category);
@@ -153,18 +142,12 @@ export const SubCategoriesDataProvider = ({ children }) => {
 
   const deleteSubCategory = async (id) => {
     try {
-      const res = await axios.delete(
-        `http://localhost:7000/admin/categories/deleteSubCategory/${id}`
-      );
+      const res = await axios.delete(`${getBaseURL()}/deleteSubCategory/${id}`);
       getAllSubcategoryData(res.data.Category.category);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // useEffect(() => {
-  //   getAllSubcategoryData();
-  // }, []);
 
   return (
     <SubCategoryContext.Provider
