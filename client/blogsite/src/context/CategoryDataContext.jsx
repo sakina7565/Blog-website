@@ -8,7 +8,7 @@ export const CategoryDataProvider = ({ children }) => {
 
   const getBaseURL = () => {
     const role = localStorage.getItem("role")?.toLowerCase() || "admin";
-    return `https://blog-backend.onrender.com/${role}/categories`;
+    return `http://localhost:7000/${role}/categories`;
   };
 
   //   Insert category from API
@@ -96,6 +96,11 @@ export const SubCategoryContext = createContext();
 
 export const SubCategoriesDataProvider = ({ children }) => {
   const [subCategories, setSubCategories] = useState([]);
+
+  const getBaseURL = () => {
+    const role = localStorage.getItem("role")?.toLowerCase() || "admin";
+    return `http://localhost:7000/${role}/categories`;
+  };
 
   const insertSubCategory = async (subcategory) => {
     try {

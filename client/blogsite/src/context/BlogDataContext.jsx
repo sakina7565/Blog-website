@@ -8,7 +8,7 @@ export const BlogDataProvider = ({ children }) => {
 
   const getBaseURL = () => {
     const role = localStorage.getItem("role")?.toLowerCase() || "admin";
-    return `https://blog-backend.onrender.com/${role}/blog`;
+    return `http://localhost:7000/${role}/blog`;
   };
 
   const insertBlogs = async (blogData) => {
