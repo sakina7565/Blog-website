@@ -1,4 +1,5 @@
 import express from "express";
+import passportConfig from './../../config/passportConfig.js'
 const router = express.Router();
 import {
   authStatus,

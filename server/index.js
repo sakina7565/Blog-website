@@ -18,7 +18,7 @@ app.use("/images", express.static(path.join(process.cwd(), "images")));
 
 // ✅ Enable CORS FIRST — before routes
 const corsOptions = {
-  origin: ["http://localhost:3001", "https://blog-website-zclq.vercel.app"],
+  origin: ["http://localhost:3001"],
   
   credentials: true,
 };
@@ -47,8 +47,8 @@ app.use(passport.session());
 
 // ✅ Routes should come AFTER middleware
 
-app.use(["/admin/blog", "/moderator/blog"], blogRoute);
-app.use(["/admin/categories", "/moderator/categories"], categoryRoute);
+app.use(["/admin/blog", "/moderator/blog", "/user/blog"], blogRoute);
+app.use(["/admin/categories", "/moderator/categories", "/user/categories"], categoryRoute);
 app.use(["/admin/user", "/moderator/user"], userByAdminRoute);
 app.use(["/admin/notification", "/moderator/notification"], notificationRouter);
 app.listen(port, () => {
